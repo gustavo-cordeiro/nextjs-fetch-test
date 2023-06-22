@@ -33,11 +33,11 @@ export const usePHContext = () => {
         });
 
         const token = await response.json();
-
-        setPHCode(router.query.code as string|| PHCode);
         localStorage.setItem('token', token.access_token);
         
         if(router.query.code) {
+          setPHCode(router.query.code as string);
+
           const query = {...router.query};
           delete query.code;
 

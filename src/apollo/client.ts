@@ -8,12 +8,12 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   // const PHCode = usePHContext();
-  const PHCode = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   return {
     headers: {
       ...headers,
-      authorization: PHCode ? `Bearer ${PHCode}` : "",
+      authorization: token ? `Bearer ${token}` : "",
     }
   }
 });
