@@ -7,7 +7,6 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  // const PHCode = usePHContext();
   const token = localStorage.getItem('token');
 
   return {

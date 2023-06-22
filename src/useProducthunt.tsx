@@ -11,11 +11,11 @@ export const usePHContext = () => {
 
   useEffect(() => {
     if (!PHCode && (!router.query.code && router.isReady)) {
-      window.location.href = `https://api.producthunt.com/v2/oauth/authorize?client_id=${'xqazo43BTFoKiAUGnk7JVtL52GaBfibzfD6j6qtTaYo'}&redirect_uri=${encodeURI('https://nextjs-fetch-test.vercel.app')}&response_type=code&scope=public+private`
+      window.location.href = `${process.env.NEXT_PUBLIC_PH_API_URL}/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PH_CLIENT_ID}&redirect_uri=${encodeURI(process.env.NEXT_PUBLIC_HOST as string)}&response_type=code&scope=public+private`
     } else {
 
       const getToken = async () => {
-        const response = await fetch('https://api.producthunt.com/v2/oauth/token', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_PH_API_URL}/oauth/token`, {
           method: "POST",
           cache: "no-cache",
           headers: {
@@ -24,16 +24,19 @@ export const usePHContext = () => {
           redirect: "follow",
           referrerPolicy: "no-referrer",
           body: JSON.stringify({
-            client_id: 'xqazo43BTFoKiAUGnk7JVtL52GaBfibzfD6j6qtTaYo',
-            client_secret: 'ZaAsR_g3HmmKVGSccEY3vkkJ1u7l-Mml2X78Eo6PH9I',
-            redirect_uri: 'https://nextjs-fetch-test.vercel.app',
+            client_id: process.env.NEXT_PUBLIC_PH_CLIENT_ID,
+            client_secret: process.env.NEXT_PUBLIC_PH_CLIENT_SECRET,
+            redirect_uri: process.env.NEXT_PUBLIC_HOST,
             grant_type: 'authorization_code',
             code: router.query.code || PHCode
           }),
         });
 
         const token = await response.json();
-        localStorage.setItem('token', token.access_token);
+
+        if(token.access_token) {
+          localStorage.setItem('token', token.access_token);
+        }
         
         if(router.query.code) {
           setPHCode(router.query.code as string);

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 
-type PH_PANELS = 'popular' | 'newest';
+type PH_PANELS = 'RANKING' | 'NEWEST';
 
 const PHCard = ({
   id, name, isVoted, votesCount, description, thumbnail, 
@@ -43,8 +43,16 @@ const Page = () => {
   const router = useRouter();
   
   const query = useQuery(gql`
-    query HomePosts {
-      posts{
+    query HomePosts (
+      $featured: Boolean,
+      $first: Int,
+      $order: PostsOrder 
+    ) {
+      posts (
+        featured: $featured,
+        first: $first,
+        order: $order 
+      ) {
         nodes {
           id,
           name,
@@ -59,13 +67,18 @@ const Page = () => {
     }
   `, {
     skip: !router.query.panel,
+    variables: {
+      featured: true,
+      first: 50,
+      order: router.query.panel
+    }
   })
 
   useEffect(() => {
     if (!router.query.panel) {
       router.push({
         pathname: '/',
-        query: { panel: 'popular' },
+        query: { panel: 'RANKING' },
       })
     }
   }, [router])
@@ -81,9 +94,9 @@ const Page = () => {
 console.log(query);
   return (
     <Container>
-      <Tabs aria-label="ProductHunt Panels" value={router.query.panel || 'popular'} onChange={HandleTabNavigation}>
-        <Tab label="Popular" id="popular" value='popular' aria-controls="producthunt-popular-panel" />
-        <Tab label="Newest" id="newest" value='newest' aria-controls="producthunt-newest-panel" />
+      <Tabs aria-label="ProductHunt Panels" value={router.query.panel || 'RANKING'} onChange={HandleTabNavigation}>
+        <Tab label="Popular" id="popular" value='RANKING' aria-controls="producthunt-popular-panel" />
+        <Tab label="Newest" id="newest" value='NEWEST' aria-controls="producthunt-newest-panel" />
       </Tabs>
       <NoSsr>
         <ol>
