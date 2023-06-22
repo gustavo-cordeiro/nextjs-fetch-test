@@ -16,11 +16,13 @@ const PHCard = ({
     <Card sx={{
       display: 'flex',
       justifyContent: 'space-between',
+      width: "99%",
+      overflow: 'visible',
     }}>
       <CardActionArea LinkComponent={Link} href={`/${slug}`}>
         <CardHeader
           avatar={
-            <Avatar src={thumbnail} />
+            <Avatar src={thumbnail} variant="rounded"/>
           }
           title={name}
           subheader={description}
@@ -44,6 +46,10 @@ const PHCard = ({
           startIcon={<ArrowDropUpRoundedIcon />}
           variant="outlined"
           sx={{
+            transform: 'translateX(30%)',
+            px: 0,
+            py: 1,
+            background: 'white',
             borderColor: '#e7eaeb',
             flexDirection: "column",
             '& .MuiButton-startIcon': {

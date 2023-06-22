@@ -15,8 +15,8 @@ const Page = () => {
         thumbnail {
           url
         }
-        media {
-          url
+        media  {
+          url(height: 280)
         }
         votesCount,
         isVoted
@@ -38,16 +38,21 @@ const Page = () => {
     <Container>
       {post && (
         <>
-          <Card>
+          <Card sx={{
+            my: 2,
+          }}>
             <CardMedia
               component="img"
               image={post.media[0].url}
+              height={280}
             />
           </Card>
-          <Card>
+          <Card sx={{
+            mb: 12,
+          }}>
             <CardHeader
               avatar={
-                <Avatar src={post.thumbnail.url}>{post.name}</Avatar>
+                <Avatar src={post.thumbnail.url} variant="rounded">{post.name}</Avatar>
               }
               title={post.name}
             />
@@ -56,28 +61,44 @@ const Page = () => {
             </CardContent>
             {
               post.featuredAt && (
-                <Card>
+                <Card sx={{
+                  m: 2,
+                }}>
                   <CardHeader
                     avatar={
-                      <WorkspacePremiumIcon />
+                      <WorkspacePremiumIcon color="warning" />
                     }
-                    title={'Product of the day'}
+                    title={'#Product of the day'}
                     subheader={`${featuredSince} days ago`}
                   />
                 </Card>
               )
             }
           </Card>
-          <Card>
+          <Card sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            borderBottomRightRadius: 0,
+            borderBottomLeftRadius: 0,
+            p: 2,
+          }}>
             <CardActions>
-              <ButtonGroup>
-                <Button component={Link} href="/">
+              <Container disableGutters sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                '& .MuiButton-root': {
+                  width: '45%',
+                }
+              }}>
+                <Button component={Link} href="/" variant="outlined">
                   Get it
                 </Button>
-                <Button disabled={post.isVoted}>
+                <Button disabled={post.isVoted} variant="contained">
                   Upvote ({post.votesCount})
                 </Button>
-              </ButtonGroup>
+                </Container>
             </CardActions>
           </Card>
         </>

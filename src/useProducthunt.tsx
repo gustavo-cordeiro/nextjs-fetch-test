@@ -12,7 +12,7 @@ export const usePHContext = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    if (!PHCode && (!router.query.code && router.isReady)) {
+    if (!token && !PHCode && (!router.query.code && router.isReady)) {
       window.location.href = `${process.env.NEXT_PUBLIC_PH_API_URL}/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_PH_CLIENT_ID}&redirect_uri=${encodeURI(process.env.NEXT_PUBLIC_HOST as string)}&response_type=code&scope=public+private`
     } else {
 
@@ -54,7 +54,8 @@ export const usePHContext = () => {
       }
 
       
-      !!token && getToken();
+      if(!token) getToken();
+      else setPHCode(token);
     }
   }, [router, PHCode, setPHCode])
 
