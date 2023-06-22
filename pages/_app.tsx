@@ -9,6 +9,7 @@ import createEmotionCache from '../src/createEmotionCache';
 import { usePHContext, PHContext } from '../src/useProducthunt';
 import { ApolloProvider } from '@apollo/client';
 import { client } from 'src/apollo/client';
+import { Container, LinearProgress } from '@mui/material';
 
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -35,7 +36,7 @@ const MyApp = (props: MyAppProps) => {
             <CssBaseline />
             {
               !PHCode ?
-                'loading...'
+                <LinearProgress />
               : <Component {...pageProps} />
             }
           </ThemeProvider>

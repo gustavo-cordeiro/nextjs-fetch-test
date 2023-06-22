@@ -13,7 +13,7 @@ export const roboto = Roboto({
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#da552e;',
     },
     secondary: {
       main: '#19857b',
@@ -21,10 +21,30 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    background: {
+      default: '#f3f5f7'
+    }
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
+
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+        }
+      }
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          background: 'white'
+        }
+      }
+    }
+  }
 });
 
 export default theme;

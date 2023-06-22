@@ -7,7 +7,7 @@ module.exports = {
         protocol: 'https',
         hostname: 'ph-files.imgix.net',
         port: '',
-        pathname: '',
+        pathname: '/',
       },
     ],
   },
